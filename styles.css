@@ -166,35 +166,45 @@ dialog::backdrop{ background:rgba(0,0,0,.6); backdrop-filter: blur(2px) }
 
 /* Roulette wheel page */
 .wheel-wrap{ display:grid; place-items:center; min-height:calc(100vh - 120px) }
-.wheel{
-  width:min(82vw, 460px); height:min(82vw, 460px);
-  border-radius:50%;
-  border:10px solid rgba(255,255,255,.08);
-  background:
-    conic-gradient(from 0deg,
-      rgba(213,19,19,.95) 0 36deg, /* 10% win sector (36deg) */
-      rgba(255,255,255,.08) 36deg 360deg
-    );
-  position:relative;
-  box-shadow:0 18px 60px rgba(0,0,0,.5), inset 0 0 40px rgba(0,0,0,.4);
-  transition: transform 4s cubic-bezier(.22,.61,.36,1);
-}
+
+/* обёртка, чтобы позиционировать стрелку относительно колеса */
+.wheel-box{ position: relative; display: inline-block; }
+
+/* стрелка чётко по центру сверху */
 .pointer{
-  position:relative; top:-12px;
+  position:absolute; top:-18px; left:50%;
+  transform:translateX(-50%);
   width:0; height:0;
   border-left:14px solid transparent;
   border-right:14px solid transparent;
   border-bottom:24px solid var(--danger);
   filter: drop-shadow(0 6px 12px rgba(0,0,0,.5));
 }
+
+/* колесо: 0° явно на «12 часов»; фиксируем origin */
+.wheel{
+  width:min(82vw, 460px); height:min(82vw, 460px);
+  border-radius:50%;
+  border:10px solid rgba(255,255,255,.08);
+  background:
+    conic-gradient(from -90deg,          /* 0° = вверх */
+      rgba(213,19,19,.95) 0 36deg,       /* 10% сектор выигрыша */
+      rgba(255,255,255,.08) 36deg 360deg
+    );
+  position:relative;
+  transform-origin: 50% 50%;
+  box-shadow:0 18px 60px rgba(0,0,0,.5), inset 0 0 40px rgba(0,0,0,.4);
+  transition: transform 4s cubic-bezier(.22,.61,.36,1);
+}
+
 .wheel-center{
   position:absolute; inset:50% auto auto 50%; translate:-50% -50%;
   width:110px; height:110px; border-radius:50%;
   background:linear-gradient(180deg,var(--accent),var(--primary));
   border:6px solid rgba(255,255,255,.22);
-  display:grid; place-items:center; font-weight:800;
-  letter-spacing:.5px;
+  display:grid; place-items:center; font-weight:800; letter-spacing:.5px;
 }
+
 .result{
   margin-top:14px; color:#dfe5ee; font-size:18px; min-height:28px; text-align:center;
 }
