@@ -8,39 +8,35 @@
 </head>
 <body>
   <header class="nav">
-    <div class="brand">
-      <div class="brand-logo" aria-hidden="true"></div>
-      <div>Объединённая первичная профсоюзная организация АГУ</div>
-    </div>
     <nav>
       <a class="btn" href="./index.html">Главная</a>
-      <a class="btn primary" href="./roulette.html">Рулетка</a>
     </nav>
   </header>
 
   <main class="container">
     <section class="section">
       <h1 style="margin:0 0 10px">Рулетка призов</h1>
-      <p class="small">Вероятность выигрыша: 10%. Вращение честное: исход определяется случайно перед анимацией.</p>
     </section>
 
-    <section class="wheel-wrap">
-      <div class="pointer" aria-hidden="true"></div>
-      <div class="wheel" id="wheel" aria-label="Игровая рулетка">
-        <div class="wheel-center">SPIN</div>
-      </div>
-      <div class="result" id="result" role="status" aria-live="polite"></div>
-      <div style="display:flex; gap:10px; margin-top:10px">
-        <button class="btn primary" id="spinBtn">Крутить</button>
-        <button class="btn" id="resetBtn">Сброс</button>
-      </div>
-    </section>
+   <section class="wheel-wrap">
+  <div class="wheel-box">
+    <div class="pointer" aria-hidden="true"></div>
+    <div class="wheel" id="wheel" aria-label="Игровая рулетка">
+      <button class="wheel-center" id="spinBtn" type="button">SPIN</button>
+    </div>
+  </div>
+
+  <div class="result" id="result" role="status" aria-live="polite"></div>
+  <div style="display:flex; gap:10px; margin-top:10px">
+    <button class="btn" id="resetBtn">Сброс</button>
+  </div>
+</section>
+
   </main>
 
   <footer class="container">
     © {year} ОППО АГУ
   </footer>
-
 <script>
 (function(){
   const wheel = document.getElementById('wheel');
@@ -49,35 +45,33 @@
   const resetBtn = document.getElementById('resetBtn');
 
   let spinning = false;
-  let lastRotation = 0;
+  let lastRotation = 0; // текущий угол (накапливаем, но нормализуем)
 
-  function randomBetween(min, max){ return Math.random() * (max - min) + min; }
+  const rand = (min, max) => Math.random() * (max - min) + min;
 
   function spin(){
     if (spinning) return;
-    spinning = true; result.textContent = "";
+    spinning = true;
+    result.textContent = "";
 
-    // Честная вероятность 10%
+    // 10% шанс выигрыша
     const win = Math.random() < 0.10;
 
-    // На нашем колесе выигрышный сектор — 0..36 градусов (10% круга).
-    // Выбираем целевой угол так, чтобы стрелка указывала на нужный сектор.
-    const baseSpins = 6; // число полных оборотов для красивой анимации
-    let targetAngle;
-    if (win){
-      targetAngle = randomBetween(0, 36); // попадаем в выигрышный сектор
-    } else {
-      targetAngle = randomBetween(40, 360); // избегаем пересечения с 0..36
-    }
+    // Выигрышный сектор: 0..36° (указатель наверху).
+    // Чуть уходим от границ, чтобы не ловить погрешности на стыке.
+    const eps = 0.4;
+    let targetAngle = win ? rand(eps, 36 - eps) : rand(40, 360 - eps);
 
-    // Вычисляем итоговый угол относительно текущего положения
-    const finalRotation = baseSpins*360 + targetAngle;
-    lastRotation += finalRotation;
+    // Красиво прокручиваем несколько оборотов
+    const baseSpins = 6;
+    const finalRotation = baseSpins * 360 + targetAngle;
+
+    // Нормализуем прошлый угол, чтобы не рос бесконечно
+    lastRotation = (lastRotation % 360) + finalRotation;
 
     wheel.style.transition = "transform 4s cubic-bezier(.22,.61,.36,1)";
     wheel.style.transform = `rotate(${lastRotation}deg)`;
 
-    // Сообщение после анимации
     setTimeout(() => {
       result.textContent = win ? "Поздравляем! Приз ваш 🎉" : "Повезёт в следующий раз.";
       spinning = false;
@@ -87,18 +81,27 @@
   function reset(){
     if (spinning) return;
     lastRotation = 0;
-    wheel.style.transition = "transform .3s ease-out";
+    wheel.style.transition = "none";
     wheel.style.transform = "rotate(0deg)";
+    // форсим перерисовку, чтобы убрать инерцию transition
+    void wheel.offsetWidth;
     result.textContent = "";
   }
 
+  // центр СПИН тоже кнопка
   spinBtn.addEventListener('click', spin);
   resetBtn.addEventListener('click', reset);
 
   // Обновляем год в футере
   document.querySelector('footer').innerHTML =
     document.querySelector('footer').innerHTML.replace('{year}', new Date().getFullYear());
+
+  // Уважение prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    wheel.style.transition = "transform .8s linear";
+  }
 })();
 </script>
+
 </body>
 </html>
