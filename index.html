@@ -9,8 +9,7 @@
 @font-face{
   font-family:"Vela Sans";
   src: local("Vela Sans"), local("VelaSans"),
-       url("fonts/VelaSans.woff2") format("woff2"),
-       url("fonts/VelaSans.woff") format("woff");
+       url("VelaSans-Regular.ttf") format("ttf");
   font-weight:100 900; font-style:normal; font-display:swap;
   unicode-range: U+000-5FF, U+600-6FF, U+4E00-9FFF;
 }
@@ -20,7 +19,7 @@
 <body>
   <header class="nav">
     <div class="brand">
-      <div class="brand-logo" aria-hidden="true"></div>
+      <div class="brand-logo" aria-hidden="true"><img src="логооппо.png"></div>
       <div>Объединённая первичная профсоюзная организация АГУ</div>
     </div>
 <!--     <nav>
@@ -46,9 +45,12 @@
       <div class="hero-card">
         <h2 style="margin:0 0 12px">Ближайшие активности</h2>
         <ul style="margin:0; padding-left:18px; color:#cfd7e6">
-          <li>Круглый стол «Студенческие инициативы»</li>
-          <li>Правовой ликбез для первокурсников</li>
-          <li>Добровольческая акция «День донора»</li>
+          <li>ПрофСвадьба</li>
+          <li>Что? Где? Когда?</li>
+          <li>Давай, сияй :)</li>
+          <li>ПрофГуляйка</li>
+          <li>Киновечер</li>
+          <li>ПрофБолталкинс</li>
         </ul>
         <p class="small" style="margin-top:10px">Состав мероприятий — демонстрационный. Замените под ваши данные.</p>
       </div>
@@ -92,10 +94,10 @@
       <h2>Мероприятия</h2>
       <div class="cards">
         <article class="card">
-          <div class="card-media" role="img" aria-label="Правовой ликбез — обложка"></div>
+          <div class="card-media" role="img" aria-label="Квартирник"></div>
           <div class="card-body">
-            <h3>Правовой ликбез</h3>
-            <p>База прав и гарантий студентов. Консультации юристов.</p>
+            <h3>Давай, сияй :)</h3>
+            <p>Мы уверены, ты многое умеешь 🔥</p>
             <div style="margin-top:12px">
               <button class="btn" data-modal-target="dlg1">Подробнее</button>
             </div>
@@ -103,10 +105,10 @@
         </article>
 
         <article class="card">
-          <div class="card-media" role="img" aria-label="Круглый стол — обложка" style="background:linear-gradient(120deg, var(--accent), var(--primary));"></div>
+          <div class="card-media" role="img" aria-label="Киновечер" style="background:linear-gradient(120deg, var(--accent), var(--primary));"></div>
           <div class="card-body">
-            <h3>Круглый стол «Инициативы»</h3>
-            <p>Обсуждаем студенческие проекты и поддержку лидеров.</p>
+            <h3>Киновечер</h3>
+            <p>Он взял ее тихо за руку...</p>
             <div style="margin-top:12px">
               <button class="btn" data-modal-target="dlg2">Подробнее</button>
             </div>
@@ -114,10 +116,43 @@
         </article>
 
         <article class="card">
-          <div class="card-media" role="img" aria-label="День донора — обложка" style="background:linear-gradient(120deg, var(--danger), #8b0d0d);"></div>
+          <div class="card-media" role="img" aria-label="чкг" style="background:linear-gradient(120deg, var(--danger), #8b0d0d);"></div>
           <div class="card-body">
-            <h3>День донора</h3>
-            <p>Добровольческая акция: помощь тем, кто нуждается.</p>
+            <h3>Что? Где? Когда?</h3>
+            <p>Разберемся, кто пикми, а кто альтушка</p>
+            <div style="margin-top:12px">
+              <button class="btn" data-modal-target="dlg3">Подробнее</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-media" role="img" aria-label="дискотека" style="background:linear-gradient(120deg, var(--danger), #8b0d0d);"></div>
+          <div class="card-body">
+            <h3>ПрофГуляйка</h3>
+            <p>Ну ты это.. Давай нашу врубай</p>
+            <div style="margin-top:12px">
+              <button class="btn" data-modal-target="dlg3">Подробнее</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-media" role="img" aria-label="свадьба" style="background:linear-gradient(120deg, var(--danger), #8b0d0d);"></div>
+          <div class="card-body">
+            <h3>ПрофСвадьба</h3>
+            <p>Ох эта свадьба, свадьба, свадьба</p>
+            <div style="margin-top:12px">
+              <button class="btn" data-modal-target="dlg3">Подробнее</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-media" role="img" aria-label="болталка" style="background:linear-gradient(120deg, var(--danger), #8b0d0d);"></div>
+          <div class="card-body">
+            <h3>ПрофБолталкинс</h3>
+            <p>Ну ты это, заходи если че</p>
             <div style="margin-top:12px">
               <button class="btn" data-modal-target="dlg3">Подробнее</button>
             </div>
